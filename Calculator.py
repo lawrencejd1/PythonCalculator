@@ -140,18 +140,20 @@ class Calculator:
         self.entryBox.configure(state="normal")
 
         #Checks if int or operator
-        if(self.isInt(text)):
+        try:
+            if(self.isInt(text)):
 
-            self.entryText += text
-            self.entryBox.insert(tk.END, text)
+                self.entryText += text
+                self.entryBox.insert(tk.END, text)
 
-        elif(self.isOperator(text) and self.isOperator(self.entryText[-1]) != True):
+            elif(self.isOperator(text) and self.isOperator(self.entryText[-1]) != True):
 
-            self.entryOperator = text
-            self.entryText += text
+                self.entryOperator = text
+                self.entryText += text
 
-        else:pass
-
+            else:pass
+        except IndexError:
+            pass
         #Prevents consecutive function buttons from being used
 
         lastChar = self.entryText[-1]
@@ -161,13 +163,11 @@ class Calculator:
             if(self.isOperator(self.entryText[-1]) == True and self.isOperator(text) == True and self.firstClick == False):
                 self.entryText = self.entryText[:-1]
                 self.entryText += text
-                print("reset? yes")
 
             elif( (self.isOperator(self.entryText[-1]) == True) and (self.firstClick == True)):    
                 self.entryBox.delete(0, 'end')
                 self.entryText.replace(lastChar, text)
                 self.firstClick = False
-                print("reset? no")
         
             else:pass
         #----------------------------------------------------
@@ -186,7 +186,7 @@ class Calculator:
 
     def equalPressed(self, text):
         self.entryBox.configure(state="normal")
-        self.total = eval(self.entryText)
+        self.total = round(eval(self.entryText), 11)
         self.entryBox.delete(0, tk.END)
         self.entryBox.insert(tk.END, self.total)
         self.entryText = str(self.total)
@@ -202,14 +202,12 @@ class Calculator:
             self.entryBox.insert(tk.END, "")
 
             while(True):
-                print(self.entryText)
                 try:
                     if(self.isOperator(self.entryText[-1]) != True):
                         self.entryText = self.entryText[:-1]
                     else:
                         break
                 except IndexError:
-                    print("No more values")
                     break
 
 
