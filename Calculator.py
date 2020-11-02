@@ -17,7 +17,7 @@ class Calculator:
         self.entryText = ""
         self.entryOperator = ""
         self.firstClick = True #Decides if user pushed a function button already
-        self.clearAll = 0
+        self.clearAll = False
     #EntryBox creation and validating int-only input
         #vcmd = (window.register(self.isInt), '%S')
         #validate="key", vcmd=vcmd
@@ -191,12 +191,12 @@ class Calculator:
         self.entryBox.insert(tk.END, self.total)
         self.entryText = str(self.total)
         self.firstClick = True
-        self.clearAll = 0
+        self.clearAll = False
         self.entryBox.configure(state="readonly")
 
     def clearPressed(self, text):
 
-        if(self.clearAll == 0):
+        if(self.clearAll == False):
             self.entryBox.configure(state="normal")
             self.entryBox.delete(0, tk.END)
             self.entryBox.insert(tk.END, "")
@@ -214,15 +214,15 @@ class Calculator:
 
 
             self.firstClick = True
-            self.clearAll += 1
+            self.clearAll == True
             self.entryBox.configure(state="readonly")
-        elif(self.clearAll == 1):
+        elif(self.clearAll == True):
             self.entryBox.configure(state="normal")
             self.entryBox.delete(0, tk.END)
             self.entryBox.insert(tk.END, "")
             self.entryText = ""
             self.firstClick = False
-            self.clearAll = False
+            self.clearAll == False
             self.entryBox.configure(state="readonly")
         else:pass
     
