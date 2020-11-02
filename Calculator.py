@@ -17,7 +17,7 @@ class Calculator:
         self.entryText = ""
         self.entryOperator = ""
         self.firstClick = True #Decides if user pushed a function button already
-        self.clearAll = False
+        self.clearAll = 0
     #EntryBox creation and validating int-only input
         #vcmd = (window.register(self.isInt), '%S')
         #validate="key", vcmd=vcmd
@@ -161,11 +161,13 @@ class Calculator:
             if(self.isOperator(self.entryText[-1]) == True and self.isOperator(text) == True and self.firstClick == False):
                 self.entryText = self.entryText[:-1]
                 self.entryText += text
+                print("reset? yes")
 
             elif( (self.isOperator(self.entryText[-1]) == True) and (self.firstClick == True)):    
                 self.entryBox.delete(0, 'end')
                 self.entryText.replace(lastChar, text)
                 self.firstClick = False
+                print("reset? no")
         
             else:pass
         #----------------------------------------------------
@@ -189,18 +191,32 @@ class Calculator:
         self.entryBox.insert(tk.END, self.total)
         self.entryText = str(self.total)
         self.firstClick = True
+        self.clearAll = 0
         self.entryBox.configure(state="readonly")
 
     def clearPressed(self, text):
 
-        if(self.clearAll == False):
+        if(self.clearAll == 0):
             self.entryBox.configure(state="normal")
             self.entryBox.delete(0, tk.END)
             self.entryBox.insert(tk.END, "")
+
+            while(True):
+                print(self.entryText)
+                try:
+                    if(self.isOperator(self.entryText[-1]) != True):
+                        self.entryText = self.entryText[:-1]
+                    else:
+                        break
+                except IndexError:
+                    print("No more values")
+                    break
+
+
             self.firstClick = True
-            self.clearAll = True
+            self.clearAll += 1
             self.entryBox.configure(state="readonly")
-        else:
+        elif(self.clearAll == 1):
             self.entryBox.configure(state="normal")
             self.entryBox.delete(0, tk.END)
             self.entryBox.insert(tk.END, "")
@@ -208,6 +224,7 @@ class Calculator:
             self.firstClick = False
             self.clearAll = False
             self.entryBox.configure(state="readonly")
+        else:pass
     
     def parentPressed(self, text):
         pass
