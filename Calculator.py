@@ -108,7 +108,7 @@ class Calculator:
         numberButtons.append(equalBtn)
 
         #Clear
-        clearBtn = Button(window, text="Clear", command=lambda j="Clear": self.clearPressed(j))
+        clearBtn = Button(window, text="Clear", command=lambda : self.clearPressed())
         clearBtn.place(x=0, y=500, width=buttonWidth, height=buttonHeight/3)
         numberButtons.append(clearBtn)
 
@@ -156,20 +156,24 @@ class Calculator:
             pass
         #Prevents consecutive function buttons from being used
 
-        lastChar = self.entryText[-1]
+        try:
+            lastChar = self.entryText[-1]
 
-        if(self.entryText != ""):
+            if(self.entryText != ""):
+                
+                if(self.isOperator(self.entryText[-1]) == True and self.isOperator(text) == True and self.firstClick == False):
+                    self.entryText = self.entryText[:-1]
+                    self.entryText += text
+
+                elif( (self.isOperator(self.entryText[-1]) == True) and (self.firstClick == True)):    
+                    self.entryBox.delete(0, 'end')
+                    self.entryText.replace(lastChar, text)
+                    self.firstClick = False
             
-            if(self.isOperator(self.entryText[-1]) == True and self.isOperator(text) == True and self.firstClick == False):
-                self.entryText = self.entryText[:-1]
-                self.entryText += text
+                else:pass
 
-            elif( (self.isOperator(self.entryText[-1]) == True) and (self.firstClick == True)):    
-                self.entryBox.delete(0, 'end')
-                self.entryText.replace(lastChar, text)
-                self.firstClick = False
-        
-            else:pass
+        except IndexError:
+            print("Index Error, Try Again")
         #----------------------------------------------------
 
         self.entryBox.configure(state="readonly")
@@ -185,16 +189,22 @@ class Calculator:
         return False
 
     def equalPressed(self, text):
-        self.entryBox.configure(state="normal")
-        self.total = round(eval(self.entryText), 11)
-        self.entryBox.delete(0, tk.END)
-        self.entryBox.insert(tk.END, self.total)
-        self.entryText = str(self.total)
-        self.firstClick = True
-        self.clearAll = False
-        self.entryBox.configure(state="readonly")
 
-    def clearPressed(self, text):
+        try:
+            self.entryBox.configure(state="normal")
+            self.total = round(eval(self.entryText), 11)
+            self.entryBox.delete(0, tk.END)
+            self.entryBox.insert(tk.END, self.total)
+            self.entryText = str(self.total)
+            self.firstClick = True
+            self.clearAll = False
+            self.entryBox.configure(state="readonly")
+        except:
+            print("Sorry, an error occured. Please retry.")
+            self.clearPressed()
+            self.clearPressed()
+
+    def clearPressed(self):
 
         if(self.clearAll == False):
             self.entryBox.configure(state="normal")
@@ -212,20 +222,30 @@ class Calculator:
 
 
             self.firstClick = True
-            self.clearAll == True
+            self.clearAll = True
             self.entryBox.configure(state="readonly")
+
         elif(self.clearAll == True):
             self.entryBox.configure(state="normal")
             self.entryBox.delete(0, tk.END)
             self.entryBox.insert(tk.END, "")
             self.entryText = ""
             self.firstClick = False
-            self.clearAll == False
+            self.clearAll = False
             self.entryBox.configure(state="readonly")
         else:pass
     
     def parentPressed(self, text):
-        pass
+
+        self.entryText += text
+        self.entryBox.configure(state="normal")
+
+        if(text == "("):
+            self.entryBox.insert(tk.END, "(")
+        else:
+            self.entryBox.insert(tk.END, ")")
+
+        self.entryBox.configure(state="readonly")
 
     def negativePressed(self, text):
         pass
