@@ -3,6 +3,41 @@ from tkinter.ttk import *
 
 class Calculator:
 
+    def __init__(self):
+    #Created little intro window
+        version = "1.0.0"
+
+    #Window Dimensions and Location
+        width = 200
+        height = 200
+        positionX = 100
+        positionY = 100
+
+    #Window Creation
+        intro = tk.Tk()
+
+        style = Style()
+        style.configure("BW.TButton", foreground="white", background="white")
+
+        introLabel1 = tk.Label(intro, text="Python Calculator", pady=10)
+        introLabel1.pack(side="top")
+
+        introLabel2 = tk.Label(intro, text="by Jesse Lawrence", pady=10)
+        introLabel2.pack(side="top")
+
+        introLabel3 = tk.Label(intro, text="Version: " + version, pady=10)
+        introLabel3.pack(side="top")
+
+        buttonOk = Button(intro, text="Okay")
+        buttonOk.pack(side="top")
+    
+    #Window
+        intro.title('About')
+        intro.geometry(f"{width}x{height}+{positionX}+{positionY}")
+        intro.mainloop()
+
+
+
     def main(self):
     #Window Dimensions and Location
         width = 400
