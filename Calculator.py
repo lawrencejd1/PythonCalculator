@@ -12,6 +12,7 @@ class Calculator:
 
     #Window Creation
         window = tk.Tk()
+        window.resizable(False, False)
 
     #Things being calculated and values stored
         self.entryText = ""
