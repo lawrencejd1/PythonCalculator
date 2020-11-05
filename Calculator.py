@@ -110,23 +110,23 @@ class Calculator:
 
         #Clear
         clearBtn = Button(window, text="Clear", command=lambda : self.clearPressed())
-        clearBtn.place(x=0, y=500, width=buttonWidth, height=buttonHeight/3)
+        clearBtn.place(x=0, y=500, width=buttonWidth, height=buttonHeight/2)
         numberButtons.append(clearBtn)
 
-        #Parenthesis
-            #Left
-        leftParentBtn = Button(window, text="(", command=lambda j="(": self.parentPressed(j))
-        leftParentBtn.place(x=0, y=(500+(buttonHeight/3)), width=buttonWidth/2, height=buttonHeight/3)
-        numberButtons.append(leftParentBtn)
+        # #Parenthesis
+        #     #Left
+        # leftParentBtn = Button(window, text="(", command=lambda j="(": self.parentPressed(j))
+        # leftParentBtn.place(x=0, y=(500+(buttonHeight/3)), width=buttonWidth/2, height=buttonHeight/3)
+        # numberButtons.append(leftParentBtn)
 
-            #Right
-        rightParentBtn = Button(window, text=")", command=lambda j=")": self.parentPressed(j))
-        rightParentBtn.place(x=50, y=(500+(buttonHeight/3)), width=buttonWidth/2, height=buttonHeight/3)
-        numberButtons.append(rightParentBtn)
+        #     #Right
+        # rightParentBtn = Button(window, text=")", command=lambda j=")": self.parentPressed(j))
+        # rightParentBtn.place(x=50, y=(500+(buttonHeight/3)), width=buttonWidth/2, height=buttonHeight/3)
+        # numberButtons.append(rightParentBtn)
 
         #Negative
         negativeBtn = Button(window, text="(-)", command=lambda j="(-)": self.negativePressed(j))
-        negativeBtn.place(x=0, y=(500+((buttonHeight/3)*2)), width=buttonWidth, height=buttonHeight/3)
+        negativeBtn.place(x=0, y=(500+(buttonHeight/2)), width=buttonWidth, height=buttonHeight/2 - 1)
         numberButtons.append(negativeBtn)
 
         #Window
@@ -235,18 +235,19 @@ class Calculator:
             self.clearAll = False
             self.entryBox.configure(state="readonly")
         else:pass
-    
-    def parentPressed(self, text):
 
-        self.entryText += text
-        self.entryBox.configure(state="normal")
+    #Possible function and implementation of parenthesis
+    # def parentPressed(self, text):
 
-        if(text == "("):
-            self.entryBox.insert(tk.END, "(")
-        else:
-            self.entryBox.insert(tk.END, ")")
+    #     self.entryText += text
+    #     self.entryBox.configure(state="normal")
 
-        self.entryBox.configure(state="readonly")
+    #     if(text == "("):
+    #         self.entryBox.insert(tk.END, "(")
+    #     else:
+    #         self.entryBox.insert(tk.END, ")")
+
+    #     self.entryBox.configure(state="readonly")
 
     def negativePressed(self, text):
         pass
