@@ -228,7 +228,18 @@ class Calculator:
         pass
 
     def negativePressed(self, text):
-        pass
+        self.entryBox.configure(state="normal")
+
+        if(self.entryText[0] != "-"):
+            self.entryText = "-" + self.entryText
+            self.entryBox.insert(0, "-")
+            print("Negative")
+        else:
+            self.entryText = self.entryText[1:]
+            self.entryBox.delete(0, 1)
+            print("Positive")
+
+        self.entryBox.configure(state="readonly")
 
 
 if __name__ == "__main__":
