@@ -267,15 +267,12 @@ class Calculator:
                 if(text == "("):
                     self.entryText += "(" 
                     self.entryBox.delete(0, 'end')
-                    print("(")
                 else:
                     self.entryText += ")"
                     self.entryBox.delete(0, 'end')
-                    print(")")
             else:
                 self.entryText = self.entryText[1:]
                 self.entryBox.delete(0, 1)
-                print("Take away ()")
         except IndexError:
             print("You cant do that!")
 
@@ -287,11 +284,9 @@ class Calculator:
         if(self.entryText[0] != "-"):
             self.entryText = "-" + self.entryText
             self.entryBox.insert(0, "-")
-            print("Negative")
         else:
             self.entryText = self.entryText[1:]
             self.entryBox.delete(0, 1)
-            print("Positive")
 
         self.entryBox.configure(state="readonly")
 
