@@ -28,7 +28,7 @@ class Calculator:
         introLabel3 = tk.Label(intro, text="Version: " + version, pady=10)
         introLabel3.pack(side="top")
 
-        buttonOk = Button(intro, text="Okay")
+        buttonOk = Button(intro, text="Okay", command=intro.destroy)
         buttonOk.pack(side="top")
     
     #Window
@@ -181,7 +181,7 @@ class Calculator:
                 self.entryText += text
                 self.entryBox.insert(tk.END, text)
 
-            elif(self.isOperator(text) and self.isOperator(self.entryText[-1]) != True):
+            elif(self.isSymbol(text) and self.isSymbol(self.entryText[-1]) != True):
 
                 self.entryOperator = text
                 self.entryText += text
@@ -195,11 +195,11 @@ class Calculator:
 
         if(self.entryText != ""):
             
-            if(self.isOperator(self.entryText[-1]) == True and self.isOperator(text) == True and self.firstClick == False):
+            if(self.isSymbol(self.entryText[-1]) == True and self.isSymbol(text) == True and self.firstClick == False):
                 self.entryText = self.entryText[:-1]
                 self.entryText += text
 
-            elif( (self.isOperator(self.entryText[-1]) == True) and (self.firstClick == True)):    
+            elif( (self.isSymbol(self.entryText[-1]) == True) and (self.firstClick == True)):    
                 self.entryBox.delete(0, 'end')
                 self.entryText.replace(lastChar, text)
                 self.firstClick = False
@@ -214,7 +214,7 @@ class Calculator:
             return True
         return False
 
-    def isOperator(self, S):
+    def isSymbol(self, S):
         if S in ['+', '-', '*', '/']:
             return True
         return False
@@ -238,17 +238,17 @@ class Calculator:
 
             while(True):
                 try:
-                    if(self.isOperator(self.entryText[-1]) != True):
+                    if(self.isSymbol(self.entryText[-1]) != True):
                         self.entryText = self.entryText[:-1]
                     else:
                         break
                 except IndexError:
                     break
 
-
             self.firstClick = True
             self.clearAll == True
             self.entryBox.configure(state="readonly")
+
         elif(self.clearAll == True):
             self.entryBox.configure(state="normal")
             self.entryBox.delete(0, tk.END)
@@ -260,7 +260,26 @@ class Calculator:
         else:pass
     
     def parentPressed(self, text):
-        pass
+        self.entryBox.configure(state="normal")
+
+        try:
+            if(self.entryText == "" or self.entryText[-1] != "(" or self.entryText[-1] != ")"):
+                if(text == "("):
+                    self.entryText += "(" 
+                    self.entryBox.delete(0, 'end')
+                    print("(")
+                else:
+                    self.entryText += ")"
+                    self.entryBox.delete(0, 'end')
+                    print(")")
+            else:
+                self.entryText = self.entryText[1:]
+                self.entryBox.delete(0, 1)
+                print("Take away ()")
+        except IndexError:
+            print("You cant do that!")
+
+        self.entryBox.configure(state="readonly")
 
     def negativePressed(self, text):
         self.entryBox.configure(state="normal")
